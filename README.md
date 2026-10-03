@@ -1,18 +1,16 @@
-# 🪺 WordNest
+# WordNest
 
 **Nuôi lớn vốn từ mỗi ngày.**
 
 WordNest là ứng dụng Android giúp ghi nhớ từ vựng bằng flashcard. Mỗi từ như một chú chim: mới thêm vào là **trứng**, đang học là **chim non**, đã thuộc là **chim trưởng thành** và bay đi. Dữ liệu lưu ngay trên điện thoại, không cần tài khoản hay kết nối mạng.
 
-> Đồ án môn Lập trình thiết bị di động – Trường Đại học Giao thông Vận tải TP.HCM (UTH)
-
 ## Thành viên
 
 | Họ tên | Vai trò |
 |---|---|
-| Khoa | Trưởng nhóm |
-| Khang | Thành viên |
-| Ngọc | Thành viên |
+| Nguyễn Huỳnh Đăng Khoa | Trưởng nhóm |
+| Nguyễn Hoàng Khang | Thành viên |
+| Như Ngọc | Thành viên |
 
 ## Chức năng chính
 
