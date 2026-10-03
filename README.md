@@ -44,7 +44,7 @@ Danh sách đầy đủ xem tại [`docs/user-stories.md`](docs/user-stories.md)
 
 ## Thiết kế
 
-Link Figma:
+Link Figma: https://www.figma.com/design/j4Ps8fU0fQH4WNHl7ZkTla/WordNest?node-id=0-1&p=f&t=mHVAcOWTHVvFk7V9-0
 
 Ảnh các màn hình xem trong thư mục [`design/ui-screens/`](design/ui-screens/).
 
