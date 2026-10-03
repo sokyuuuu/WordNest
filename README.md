@@ -61,7 +61,6 @@ wordnest-android/
 │   └── navigation_flow.png
 ├── design/
 │   ├── style_guide.md
-│   ├── wireframes/
 │   ├── ui_screens/
 │   └── link_figma.md
 └── app/
