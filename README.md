@@ -1,1 +1,76 @@
-# WordNest
+# 🪺 WordNest
+
+**Nuôi lớn vốn từ mỗi ngày.**
+
+WordNest là ứng dụng Android giúp ghi nhớ từ vựng bằng flashcard. Mỗi từ như một chú chim: mới thêm vào là **trứng**, đang học là **chim non**, đã thuộc là **chim trưởng thành** và bay đi. Dữ liệu lưu ngay trên điện thoại, không cần tài khoản hay kết nối mạng.
+
+> Đồ án môn Lập trình thiết bị di động – Trường Đại học Giao thông Vận tải TP.HCM (UTH)
+
+## Thành viên
+
+| Họ tên | Vai trò |
+|---|---|
+| Khoa | Trưởng nhóm |
+| Khang | Thành viên |
+| Ngọc | Thành viên |
+
+## Chức năng chính
+
+- **Quản lý Tổ (bộ từ):** tạo, sửa, xóa, xem tiến độ từng Tổ
+- **Quản lý từ vựng:** thêm, sửa, xóa từ kèm nghĩa, phiên âm, ví dụ; tìm kiếm
+- **Học flashcard:** lật thẻ, đánh dấu đã thuộc hoặc chưa thuộc, xem kết quả buổi học
+- **Kiểm tra:** trắc nghiệm, điền từ, xem lại các từ làm sai
+- **Theo dõi:** ngày ấp trứng (học liên tiếp), thống kê "Đàn chim của bạn"
+- **Tiện ích:** nhắc học hằng ngày, chế độ tối
+
+Hướng mở rộng: phát âm từ (Text-to-Speech), lặp lại ngắt quãng, đăng nhập và đồng bộ Firebase.
+
+Danh sách đầy đủ xem tại [`docs/user-stories.md`](docs/user-stories.md).
+
+## Công nghệ dự kiến
+
+| Phần | Công nghệ |
+|---|---|
+| Nền tảng | Android |
+| Ngôn ngữ | Kotlin |
+| Kiến trúc | MVVM |
+| Lưu trữ | Room (SQLite) |
+| Thiết kế | Figma, Material Design 3 |
+
+## Tiến độ
+
+- [x] Chọn đề tài, khảo sát, phân tích
+- [ ] Thiết kế giao diện (Figma)
+- [ ] Lập trình ứng dụng
+- [ ] Kiểm thử và hoàn thiện
+
+## Thiết kế
+
+Link Figma: _(dán link vào đây)_
+
+Ảnh các màn hình xem trong thư mục [`design/ui-screens/`](design/ui-screens/).
+
+## Cấu trúc repo
+
+```
+wordnest-android/
+├── README.md
+├── docs/
+│   ├── analysis.md
+│   ├── user-stories.md
+│   ├── usecase.png
+│   ├── erd.png
+│   └── navigation-flow.png
+├── design/
+│   ├── style-guide.md
+│   ├── wireframes/
+│   ├── ui-screens/
+│   └── link-figma.md
+└── app/
+```
+
+## Quy ước làm việc
+
+- Mỗi người làm trên một branch riêng: `feature/khoa`, `feature/khang`, `feature/ngoc`
+- Không push trực tiếp lên `main`, tạo pull request để trưởng nhóm duyệt
+- Commit thường xuyên, nội dung rõ ràng
