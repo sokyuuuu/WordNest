@@ -156,5 +156,5 @@ Mỗi màn hình chỉ nên có **một** nút chính.
 ## 10. Tệp liên quan
 
 - Logo và hình minh họa: `design/assets/`
-- Ảnh các màn hình: `design/ui-screens/`
-- Link file Figma: `design/link-figma.md`
+- Ảnh các màn hình: `design/ui_screens/`
+- Link file Figma: `design/link_figma.md`
