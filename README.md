@@ -23,7 +23,7 @@ WordNest là ứng dụng Android giúp ghi nhớ từ vựng bằng flashcard. 
 
 Hướng mở rộng: phát âm từ (Text-to-Speech), lặp lại ngắt quãng, đăng nhập và đồng bộ Firebase.
 
-Danh sách đầy đủ xem tại [`docs/user-stories.md`](docs/user-stories.md).
+Danh sách đầy đủ xem tại [`docs/user_stories.md`](docs/user-stories.md).
 
 ## Công nghệ dự kiến
 
