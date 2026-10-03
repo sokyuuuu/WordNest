@@ -55,15 +55,15 @@ wordnest-android/
 ├── README.md
 ├── docs/
 │   ├── analysis.md
-│   ├── user-stories.md
+│   ├── user_stories.md
 │   ├── usecase.png
 │   ├── erd.png
-│   └── navigation-flow.png
+│   └── navigation_flow.png
 ├── design/
-│   ├── style-guide.md
+│   ├── style_guide.md
 │   ├── wireframes/
-│   ├── ui-screens/
-│   └── link-figma.md
+│   ├── ui_screens/
+│   └── link_figma.md
 └── app/
 ```
 
