@@ -1,7 +1,5 @@
 # Khảo sát và phân tích – WordNest
 
-_Ngày khảo sát 03102026. Giá và tính năng có thể thay đổi theo thời gian._
-
 ## 1. Giới thiệu đề tài
 
 WordNest là ứng dụng Android giúp người học ghi nhớ từ vựng bằng flashcard. Ứng dụng lấy hình ảnh chú chim làm điểm nhấn mỗi từ là một quả trứng được ấp dần cho đến khi thành chim trưởng thành bay đi, giúp việc học có cảm giác chăm sóc và tiến bộ rõ ràng.
