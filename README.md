@@ -10,7 +10,7 @@ WordNest là ứng dụng Android giúp ghi nhớ từ vựng bằng flashcard. 
 |---|---|
 | Nguyễn Huỳnh Đăng Khoa | Trưởng nhóm |
 | Nguyễn Hoàng Khang | Thành viên |
-| Như Ngọc | Thành viên |
+| Hà Vũ Như Ngọc | Thành viên |
 
 ## Chức năng chính
 
