@@ -35,12 +35,6 @@ Danh sách đầy đủ xem tại [`docs/user_stories.md`](docs/user_stories.md)
 | Lưu trữ | Room (SQLite) |
 | Thiết kế | Figma, Material Design 3 |
 
-## Tiến độ
-
-- [x] Chọn đề tài, khảo sát, phân tích
-- [ ] Thiết kế giao diện (Figma)
-- [ ] Lập trình ứng dụng
-- [ ] Kiểm thử và hoàn thiện
 
 ## Thiết kế
 
