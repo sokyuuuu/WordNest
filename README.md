@@ -23,7 +23,7 @@ WordNest là ứng dụng Android giúp ghi nhớ từ vựng bằng flashcard. 
 
 Hướng mở rộng: phát âm từ (Text-to-Speech), lặp lại ngắt quãng, đăng nhập và đồng bộ Firebase.
 
-Danh sách đầy đủ xem tại [`docs/user_stories.md`](docs/user-stories.md).
+Danh sách đầy đủ xem tại [`docs/user_stories.md`](docs/user_stories.md).
 
 ## Công nghệ dự kiến
 
@@ -46,7 +46,7 @@ Danh sách đầy đủ xem tại [`docs/user_stories.md`](docs/user-stories.md)
 
 Link Figma: https://www.figma.com/design/j4Ps8fU0fQH4WNHl7ZkTla/WordNest?node-id=0-1&p=f&t=mHVAcOWTHVvFk7V9-0
 
-Ảnh các màn hình xem trong thư mục [`design/ui-screens/`](design/ui-screens/).
+Ảnh các màn hình xem trong thư mục [`design/ui_screens/`](design/ui_screens/).
 
 ## Cấu trúc repo
 
@@ -64,10 +64,3 @@ wordnest-android/
 │   ├── ui_screens/
 │   └── link_figma.md
 └── app/
-```
-
-## Quy ước làm việc
-
-- Mỗi người làm trên một branch riêng: `feature/khoa`, `feature/khang`, `feature/ngoc`
-- Không push trực tiếp lên `main`, tạo pull request để trưởng nhóm duyệt
-- Commit thường xuyên, nội dung rõ ràng
