@@ -73,7 +73,7 @@ Create table WORD(
 	deck_id UNIQUEIDENTIFIER NOT NULL,
 	term VARCHAR(100) NOT NULL,
 	meaning NVARCHAR(500) NOT NULL,
-	phonetic VARCHAR(100) NULL,
+	phonetic NVARCHAR(100) NULL,
 	example VARCHAR(500) NULL,
 	status VARCHAR(100) NULL,
 	correct_streak INT NOT NULL DEFAULT 0,
