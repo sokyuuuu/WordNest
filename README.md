@@ -41,19 +41,3 @@ Danh sách đầy đủ xem tại [`docs/user_stories.md`](docs/user_stories.md)
 Link Figma: https://www.figma.com/design/j4Ps8fU0fQH4WNHl7ZkTla/WordNest?node-id=0-1&p=f&t=mHVAcOWTHVvFk7V9-0
 
 Ảnh các màn hình xem trong thư mục [`design/ui_screens/`](design/ui_screens/).
-
-## Cấu trúc repo
-
-```
-wordnest-android/
-├── README.md
-├── docs/
-│   ├── analysis.md
-│   ├── user_stories.md
-│   ├── usecase.png
-│   ├── erd.png
-│   └── navigation_flow.png
-├── design/
-│   ├── style_guide.md
-│   ├── ui_screens/
-└── app/
