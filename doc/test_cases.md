@@ -164,27 +164,27 @@ Việc lên hạng dựa trên **thời gian học đều đặn** (tương tự
 | TC18-03 | Chế độ tối được giữ | 1. Bật chế độ tối<br>2. Đóng hẳn app, mở lại | Vẫn ở chế độ tối |
 | TC18-04 | Tắt chế độ tối | 1. Tắt chế độ tối | Giao diện trở về sáng |
 
-## US19 – Phát âm từ (F19) ⚠️
+## US19 – Phát âm từ (F19)
 
-Chức năng này thuộc mức ưu tiên Thấp, cần xác nhận có nằm trong v1.0.0 không.
+Mức ưu tiên Thấp. Làm trong v1.0.0 nếu kịp.
 
 | Mã | Kịch bản | Các bước | Kết quả mong đợi |
 |---|---|---|---|
 | TC19-01 | Có nút loa | 1. Mở thẻ flashcard | Thẻ có nút loa |
 | TC19-02 | Đọc từ | 1. Chạm nút loa | Đọc to từ đó bằng tiếng Anh |
 
-## US20 – Lặp lại ngắt quãng (F20) ⚠️
+## US20 – Lặp lại ngắt quãng (F20)
 
-Chức năng này thuộc mức ưu tiên Thấp, cần xác nhận có nằm trong v1.0.0 không.
+Mức ưu tiên Thấp. Trong v1.0.0 chỉ làm bản đơn giản: từ làm sai được đặt ngày ôn lại sớm hơn.
 
 | Mã | Kịch bản | Các bước | Kết quả mong đợi |
 |---|---|---|---|
 | TC20-01 | Từ sai được ôn sớm hơn | 1. Một từ làm sai, một từ làm đúng, cùng thời điểm<br>2. Kiểm tra lịch ôn | Từ làm sai có ngày ôn lại sớm hơn |
 | TC20-02 | Khoảng cách tăng dần | 1. Đánh dấu đúng một từ liên tiếp nhiều buổi | Khoảng cách đến lần ôn kế tiếp tăng dần |
 
-## US21 – Đăng nhập và đồng bộ (F21) ⚠️
+## US21 – Đăng nhập và đồng bộ (F21)
 
-Chức năng này thuộc mức ưu tiên Thấp và đi ngược với README ("không cần tài khoản"). Cần xác nhận có nằm trong v1.0.0 không.
+Chuyển sang v1.1. Không thuộc phạm vi v1.0.0, vì đi ngược với README ("không cần tài khoản").
 
 | Mã | Kịch bản | Các bước | Kết quả mong đợi |
 |---|---|---|---|
@@ -212,8 +212,12 @@ Chức năng này thuộc mức ưu tiên Thấp và đi ngược với README (
 - **Nút "học lại" ẩn** khi không có từ chưa thuộc (TC10-03).
 - **Lên hạng dựa trên thời gian học đều đặn**, tương tự chuỗi ngày của Duolingo. "Chưa thuộc" không làm giảm hạng. Nếu không học trong một thời gian, hạng tự giảm (US11, TC11-02 đến TC11-05).
 - **Tổ có ít từ:** gợi ý thêm từ (TC12-05).
+- **Phạm vi v1.0.0:**
+  - F01–F18: bắt buộc.
+  - F19 (phát âm): làm nếu kịp, dùng `TextToSpeech` có sẵn.
+  - F20 (lặp lại ngắt quãng): làm bản đơn giản.
+  - F21 (đăng nhập, đồng bộ Firebase): chuyển sang v1.1.
 
 ## Câu hỏi còn lại
 
 1. **Ngưỡng ngày học:** cần bao nhiêu ngày học đều đặn để lên Chim non và Chim bay? Không học bao lâu thì hạng giảm, và giảm một bậc hay nhiều hơn? (TC11-02, TC11-03, TC11-05)
-2. **Phạm vi v1.0.0** cho US19, US20, US21 (xem đề xuất bên dưới).
