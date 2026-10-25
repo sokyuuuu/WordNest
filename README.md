@@ -35,6 +35,51 @@ Danh sách đầy đủ xem tại [`doc/user_stories.md`](doc/user_stories.md).
 | Lưu trữ | Room (SQLite) |
 | Thiết kế | Figma, Material Design 3 |
 
+## Cấu trúc thư mục
+
+```
+WordNest/
+├── app/                  # Mã nguồn Android (Kotlin, MVVM)
+│   └── src/main/java/com/wordnest/
+│       ├── data/         # Room: entity, DAO, repository
+│       ├── viewmodel/    # ViewModel cho từng màn hình
+│       ├── ui/           # Compose/View: màn hình, component, điều hướng
+│       └── util/         # Hàm tiện ích (ngày ấp trứng, giờ nhắc...)
+├── database/schema/      # Schema tham khảo (WN_DB.sql)
+├── design/               # Style guide, ảnh màn hình
+└── doc/                  # User story, danh sách chức năng, phân tích
+```
+
+## Cài đặt và chạy
+
+Yêu cầu:
+- Android Studio (bản mới nhất)
+- JDK 17 (Android Studio đã kèm sẵn)
+- Android SDK 35 trở lên
+
+Các bước:
+
+1. Clone repo:
+   ```bash
+   git clone https://github.com/sokyuuuu/WordNest.git
+   cd WordNest
+   ```
+2. Mở thư mục `WordNest` bằng Android Studio.
+3. Chờ Gradle sync xong.
+4. Chạy app: chọn thiết bị hoặc emulator rồi bấm **Run** (`Shift + F10`).
+
+Hoặc build bằng dòng lệnh:
+
+```bash
+./gradlew assembleDebug   # build APK debug
+./gradlew test            # chạy unit test
+```
+
+APK debug nằm tại `app/build/outputs/apk/debug/`.
+
+## Đóng góp
+
+Đọc [`CONTRIBUTING.md`](CONTRIBUTING.md) trước khi tạo nhánh hoặc commit. Tóm tắt: không push trực tiếp vào `main`, mọi thay đổi đi qua Pull Request và cần 1 người khác duyệt.
 
 ## Thiết kế
 
