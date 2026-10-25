@@ -13,7 +13,7 @@ Tài liệu này được viết từ tiêu chí chấp nhận trong [`user_stor
 | Mã | Kịch bản | Các bước | Kết quả mong đợi |
 |---|---|---|---|
 | TC01-01 | Tạo Tổ hợp lệ | 1. Bấm nút tạo Tổ<br>2. Nhập tên "Tiếng Anh cơ bản", mô tả "Từ vựng đời sống"<br>3. Bấm Lưu | Tổ mới hiện ngay trong danh sách với đúng tên |
-| TC01-02 | Tạo Tổ không nhập mô tả ⚠️ | 1. Nhập tên, bỏ trống mô tả<br>2. Bấm Lưu | Tổ được tạo thành công |
+| TC01-02 | Tạo Tổ không nhập mô tả | 1. Nhập tên, bỏ trống mô tả<br>2. Bấm Lưu | Tổ được tạo thành công |
 | TC01-03 | Bỏ trống tên | 1. Bỏ trống tên, nhập mô tả<br>2. Bấm Lưu | Không lưu, hiển thị thông báo lỗi ở ô tên |
 | TC01-04 | Tên chỉ có khoảng trắng | 1. Nhập tên toàn khoảng trắng<br>2. Bấm Lưu | Không lưu, hiển thị thông báo lỗi |
 
@@ -90,18 +90,19 @@ Tài liệu này được viết từ tiêu chí chấp nhận trong [`user_stor
 |---|---|---|---|
 | TC10-01 | Số liệu đúng | 1. Học 10 từ, đánh dấu thuộc 7, chưa thuộc 3<br>2. Xem kết quả | Hiển thị đúng 7 thuộc, 3 chưa thuộc |
 | TC10-02 | Học lại từ chưa thuộc | 1. Ở màn hình kết quả, bấm "Học lại các từ chưa thuộc" | Chỉ học 3 từ chưa thuộc |
-| TC10-03 | Không có từ chưa thuộc | 1. Đánh dấu thuộc hết 10 từ<br>2. Xem kết quả | Không có lỗi; nút học lại ẩn hoặc vô hiệu hóa ⚠️ |
+| TC10-03 | Không có từ chưa thuộc | 1. Đánh dấu thuộc hết 10 từ<br>2. Xem kết quả | Không có lỗi; nút học lại không hiển thị |
 
 ## US11 – Trạng thái từ: Trứng, Chim non, Chim bay (F11)
 
-Ngưỡng chuyển trạng thái phụ thuộc quy tắc đã chốt. Các test case dưới đây ghi số lần cụ thể; cần cập nhật khi nhóm chốt quy tắc ⚠️.
+Việc lên hạng dựa trên **thời gian học đều đặn** (tương tự chuỗi ngày của Duolingo), không chỉ dựa trên số lần đúng. Ngưỡng số ngày cụ thể cần chốt ⚠️.
 
 | Mã | Kịch bản | Các bước | Kết quả mong đợi |
 |---|---|---|---|
 | TC11-01 | Từ mới là Trứng | 1. Thêm từ mới | Trạng thái là Trứng |
-| TC11-02 | Lên Chim non | 1. Đánh dấu "Đã thuộc" đủ số lần theo quy tắc | Trạng thái chuyển sang Chim non |
-| TC11-03 | Lên Chim bay | 1. Tiếp tục đánh dấu "Đã thuộc" đủ số lần theo quy tắc | Trạng thái chuyển sang Chim bay |
-| TC11-04 | Chưa thuộc không làm tăng trạng thái | 1. Từ đang là Chim non<br>2. Đánh dấu "Chưa thuộc" | Trạng thái không tăng ⚠️ |
+| TC11-02 | Lên Chim non | 1. Học từ đều đặn đủ số ngày theo ngưỡng đã chốt | Trạng thái chuyển sang Chim non |
+| TC11-03 | Lên Chim bay | 1. Tiếp tục học đều đặn đủ số ngày theo ngưỡng đã chốt | Trạng thái chuyển sang Chim bay |
+| TC11-04 | Chưa thuộc không làm giảm hạng | 1. Từ đang là Chim non<br>2. Đánh dấu "Chưa thuộc" | Trạng thái giữ nguyên |
+| TC11-05 | Không học lâu thì tự giảm hạng | 1. Từ đang là Chim bay<br>2. Không mở app trong khoảng thời gian quy định | Khi mở lại app, trạng thái giảm xuống một bậc ⚠️ (cần chốt số ngày và mức giảm) |
 
 ## US12 – Trắc nghiệm (F12)
 
@@ -111,7 +112,7 @@ Ngưỡng chuyển trạng thái phụ thuộc quy tắc đã chốt. Các test 
 | TC12-02 | Chọn đúng | 1. Chọn đáp án đúng | Báo "Đúng" ngay sau khi chọn |
 | TC12-03 | Chọn sai | 1. Chọn đáp án sai | Báo "Sai" ngay, hiển thị đáp án đúng |
 | TC12-04 | Không trùng đáp án | 1. Lặp qua nhiều câu | Không có 2 đáp án giống nhau trong cùng một câu |
-| TC12-05 | Tổ có ít hơn 4 từ ⚠️ | 1. Tổ chỉ có 2 từ<br>2. Bắt đầu trắc nghiệm | Không cho bắt đầu, hiển thị thông báo cần thêm từ |
+| TC12-05 | Tổ có ít hơn 4 từ | 1. Tổ chỉ có 2 từ<br>2. Bắt đầu trắc nghiệm | Hiển thị gợi ý thêm từ vào Tổ |
 
 ## US13 – Xem kết quả và từ làm sai (F13)
 
@@ -198,17 +199,21 @@ Chức năng này thuộc mức ưu tiên Thấp và đi ngược với README (
 | Nhóm | Số US | Số test case |
 |---|---|---|
 | Quản lý Tổ và từ (US01–US07) | 7 | 24 |
-| Học tập và kiểm tra (US08–US14) | 7 | 25 |
+| Học tập và kiểm tra (US08–US14) | 7 | 26 |
 | Theo dõi và tiện ích (US15–US18) | 4 | 14 |
 | Nâng cao (US19–US21) | 3 | 7 |
-| **Tổng** | **21** | **70** |
+| **Tổng** | **21** | **71** |
 
 ---
 
-## Câu hỏi cần xác nhận
+## Đã chốt
 
-1. **Mô tả Tổ có bắt buộc không?** (TC01-02). US01 ghi "nhập được tên và mô tả", chưa rõ có bắt buộc.
-2. **Nút học lại khi không có từ chưa thuộc** (TC10-03): ẩn hay vô hiệu hóa?
-3. **Quy tắc F11:** học đúng bao nhiêu lần thì lên Chim non và Chim bay? Đánh dấu "Chưa thuộc" có giảm trạng thái không? (TC11-02, TC11-03, TC11-04)
-4. **Tổ có ít hơn 4 từ** thì xử lý thế nào khi làm trắc nghiệm? (TC12-05)
-5. **Phạm vi v1.0.0:** US19 (phát âm), US20 (lặp lại ngắt quãng), US21 (đăng nhập) có nằm trong bản 1.0.0 không? README ghi "không cần tài khoản" và xem các mục này là hướng mở rộng.
+- **Mô tả Tổ là tùy chọn** (TC01-02).
+- **Nút "học lại" ẩn** khi không có từ chưa thuộc (TC10-03).
+- **Lên hạng dựa trên thời gian học đều đặn**, tương tự chuỗi ngày của Duolingo. "Chưa thuộc" không làm giảm hạng. Nếu không học trong một thời gian, hạng tự giảm (US11, TC11-02 đến TC11-05).
+- **Tổ có ít từ:** gợi ý thêm từ (TC12-05).
+
+## Câu hỏi còn lại
+
+1. **Ngưỡng ngày học:** cần bao nhiêu ngày học đều đặn để lên Chim non và Chim bay? Không học bao lâu thì hạng giảm, và giảm một bậc hay nhiều hơn? (TC11-02, TC11-03, TC11-05)
+2. **Phạm vi v1.0.0** cho US19, US20, US21 (xem đề xuất bên dưới).
