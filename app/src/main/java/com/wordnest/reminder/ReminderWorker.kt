@@ -18,9 +18,9 @@ import com.wordnest.MainActivity
 class ReminderWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
 
     override fun doWork(): Result {
-        if (!canPostNotifications()) return Result.success()
+        if (!canPostNotifications(applicationContext)) return Result.success()
 
-        createChannel()
+        ensureChannel(applicationContext)
 
         val openApp = PendingIntent.getActivity(
             applicationContext,
@@ -41,26 +41,26 @@ class ReminderWorker(context: Context, params: WorkerParameters) : Worker(contex
         return Result.success()
     }
 
-    private fun canPostNotifications(): Boolean {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return true
-        return ContextCompat.checkSelfPermission(
-            applicationContext,
-            Manifest.permission.POST_NOTIFICATIONS,
-        ) == PackageManager.PERMISSION_GRANTED
-    }
-
-    private fun createChannel() {
-        val channel = NotificationChannel(
-            CHANNEL_ID,
-            "Nhắc học hằng ngày",
-            NotificationManager.IMPORTANCE_DEFAULT,
-        )
-        applicationContext.getSystemService(NotificationManager::class.java)
-            .createNotificationChannel(channel)
-    }
-
     companion object {
         const val CHANNEL_ID = "daily_reminder_channel"
-        private const val NOTIFICATION_ID = 1001
+        const val NOTIFICATION_ID = 1001
+
+        fun canPostNotifications(context: Context): Boolean {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return true
+            return ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.POST_NOTIFICATIONS,
+            ) == PackageManager.PERMISSION_GRANTED
+        }
+
+        fun ensureChannel(context: Context) {
+            val channel = NotificationChannel(
+                CHANNEL_ID,
+                "Nhắc học hằng ngày",
+                NotificationManager.IMPORTANCE_DEFAULT,
+            )
+            context.getSystemService(NotificationManager::class.java)
+                ?.createNotificationChannel(channel)
+        }
     }
 }

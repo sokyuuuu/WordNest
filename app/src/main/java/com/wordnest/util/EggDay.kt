@@ -1,26 +1,40 @@
-package com.wordnest.util
+﻿package com.wordnest.util
 
 import java.time.LocalDate
 
-/**
- * Tính số ngày ấp trứng: số ngày học liên tiếp tính đến hiện tại.
- *
- * Chuỗi vẫn còn hiệu lực nếu hôm nay hoặc hôm qua có học.
- * Bỏ qua mọi ngày sau [today].
- */
 fun calculateEggDay(studyDays: Set<LocalDate>, today: LocalDate): Int {
-    val lastStudyDay = studyDays
-        .filter { !it.isAfter(today) }
-        .maxOrNull()
-        ?: return 0
-
-    if (lastStudyDay.isBefore(today.minusDays(1))) return 0
-
-    var count = 0
-    var day = lastStudyDay
-    while (day in studyDays) {
-        count++
-        day = day.minusDays(1)
+    val start = when {
+        studyDays.contains(today) -> today
+        studyDays.contains(today.minusDays(1)) -> today.minusDays(1)
+        else -> return 0
     }
-    return count
+    var streak = 0
+    var cursor = start
+    while (studyDays.contains(cursor)) {
+        streak++
+        cursor = cursor.minusDays(1)
+    }
+    return streak
+}
+
+fun calculateLongestStreak(studyDays: Set<LocalDate>, today: LocalDate = LocalDate.now()): Int {
+    val validDays = studyDays.filter { !it.isAfter(today) }
+    if (validDays.isEmpty()) return 0
+    val sortedDays = validDays.sorted()
+    var maxStreak = 0
+    var currentStreak = 0
+    var prevDate: LocalDate? = null
+
+    for (date in sortedDays) {
+        if (prevDate != null && date == prevDate.plusDays(1)) {
+            currentStreak++
+        } else {
+            currentStreak = 1
+        }
+        if (currentStreak > maxStreak) {
+            maxStreak = currentStreak
+        }
+        prevDate = date
+    }
+    return maxStreak
 }

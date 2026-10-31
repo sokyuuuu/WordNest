@@ -1,4 +1,4 @@
-package com.wordnest.util
+﻿package com.wordnest.util
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

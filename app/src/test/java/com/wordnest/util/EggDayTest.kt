@@ -1,4 +1,4 @@
-package com.wordnest.util
+﻿package com.wordnest.util
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -69,5 +69,35 @@ class EggDayTest {
         val march1 = LocalDate.of(2026, 3, 1)
         val days = setOf(march1, march1.minusDays(1), march1.minusDays(2))
         assertEquals(3, calculateEggDay(days, march1))
+    }
+
+    @Test
+    fun longestStreak_emptyReturnsZero() {
+        assertEquals(0, calculateLongestStreak(emptySet(), today))
+    }
+
+    @Test
+    fun longestStreak_multipleRuns_returnsMaximum() {
+        val days = setOf(
+            today.minusDays(10),
+            today.minusDays(9),
+            today.minusDays(8),
+            today.minusDays(7), // run 1: 4 days
+            today.minusDays(4),
+            today.minusDays(3), // run 2: 2 days
+            today               // run 3: 1 day
+        )
+        assertEquals(4, calculateLongestStreak(days, today))
+    }
+
+    @Test
+    fun longestStreak_futureDaysIgnored() {
+        val days = setOf(
+            today,
+            today.plusDays(1),
+            today.plusDays(2),
+            today.plusDays(3)
+        )
+        assertEquals(1, calculateLongestStreak(days, today))
     }
 }

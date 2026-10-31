@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="cream_background">#FFF8EC</color>
+    <color name="cream_surface">#FAF3E3</color>
+    <color name="danger_red">#D9534F</color>
+    <color name="forest_green">#2E7D5B</color>
+    <color name="honey_yellow">#F2B93B</color>
+    <color name="text_primary">#2B2118</color>
+    <color name="text_secondary">#7A6F63</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>

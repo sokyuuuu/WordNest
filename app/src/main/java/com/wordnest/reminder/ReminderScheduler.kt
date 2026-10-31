@@ -9,23 +9,36 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import java.util.concurrent.TimeUnit
 
-object ReminderScheduler {
+class ReminderScheduler(private val context: Context) {
 
-    private const val WORK_NAME = "daily_reminder"
+    private val workManager: WorkManager
+        get() = WorkManager.getInstance(context)
 
-    fun schedule(context: Context, reminderTime: LocalTime) {
-        val delay = delayUntilNextReminder(LocalDateTime.now(), reminderTime)
+    fun scheduleDaily(time: LocalTime, now: LocalDateTime = LocalDateTime.now()) {
+        val initialDelay = delayUntilNextReminder(now, time)
         val request = PeriodicWorkRequestBuilder<ReminderWorker>(24, TimeUnit.HOURS)
-            .setInitialDelay(delay.toMillis(), TimeUnit.MILLISECONDS)
+            .setInitialDelay(initialDelay.toMillis(), TimeUnit.MILLISECONDS)
             .build()
-        WorkManager.getInstance(context).enqueueUniquePeriodicWork(
+        workManager.enqueueUniquePeriodicWork(
             WORK_NAME,
             ExistingPeriodicWorkPolicy.UPDATE,
-            request,
+            request
         )
     }
 
-    fun cancel(context: Context) {
-        WorkManager.getInstance(context).cancelUniqueWork(WORK_NAME)
+    fun cancel() {
+        workManager.cancelUniqueWork(WORK_NAME)
+    }
+
+    companion object {
+        const val WORK_NAME = "daily_reminder"
+
+        fun schedule(context: Context, reminderTime: LocalTime) {
+            ReminderScheduler(context).scheduleDaily(reminderTime)
+        }
+
+        fun cancel(context: Context) {
+            ReminderScheduler(context).cancel()
+        }
     }
 }

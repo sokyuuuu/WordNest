@@ -1,4 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">WordNest</string>
+    <string name="add_word_back">Quay lại</string>
+    <string name="add_word_empty">Không có gợi ý cho từ này. Bạn vẫn có thể nhập tay.</string>
+    <string name="add_word_error">Không tải được gợi ý (%1$s). Bạn vẫn có thể nhập tay và lưu.</string>
+    <string name="add_word_example_label">Ví dụ</string>
+    <string name="add_word_example_placeholder">Câu ví dụ (tùy chọn)</string>
+    <string name="add_word_example_suggestions">Ví dụ gợi ý (chạm để dùng)</string>
+    <string name="add_word_loading">Đang tải gợi ý…</string>
+    <string name="add_word_meaning_label">Nghĩa tiếng Việt *</string>
+    <string name="add_word_meaning_placeholder">Gõ nghĩa hoặc chọn từ gợi ý bên dưới</string>
+    <string name="add_word_meaning_suggestions">Nghĩa gợi ý (chạm để chọn/bỏ chọn)</string>
+    <string name="add_word_phonetic_label">Phiên âm</string>
+    <string name="add_word_phonetic_placeholder">Ví dụ: /ˈæp.əl/ (tùy chọn)</string>
+    <string name="add_word_save">Lưu từ</string>
+    <string name="add_word_saving">Đang lưu…</string>
+    <string name="add_word_suggest_off">Gợi ý tự động đang tắt — nhập tay toàn bộ.</string>
+    <string name="add_word_term_label">Từ tiếng Anh *</string>
+    <string name="add_word_term_placeholder">Gõ từ, ví dụ: apple</string>
+    <string name="add_word_title">Thêm từ mới</string>
+    <string name="coming_soon_desc">Tính năng học tập &amp; ôn tập thông minh đang được hoàn thiện ở giai đoạn tiếp theo.</string>
+    <string name="coming_soon_title">Sắp ra mắt</string>
+    <string name="create_deck_title">Tạo Tổ từ mới</string>
+    <string name="decks_subtitle">Quản lý các bộ từ của bạn</string>
+    <string name="decks_title">Tổ từ vựng</string>
+    <string name="edit_deck_title">Chỉnh sửa Tổ</string>
+    <string name="edit_word_title">Chỉnh sửa từ</string>
+    <string name="search_placeholder">Tìm kiếm từ vựng hoặc Tổ từ...</string>
+    <string name="status_bird">Chim trưởng thành</string>
+    <string name="status_chick">Chim non</string>
+    <string name="status_egg">Trứng</string>
+    <string name="tab_decks">Tổ từ</string>
+    <string name="tab_home">Trang chủ</string>
+    <string name="tab_settings">Cài đặt</string>
+    <string name="tab_stats">Thống kê</string>
 </resources>
