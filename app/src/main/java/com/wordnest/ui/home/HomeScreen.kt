@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -19,7 +20,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.wordnest.viewmodel.HomeViewModel
 
 @Composable
-fun HomeScreen(viewModel: HomeViewModel = viewModel()) {
+fun HomeScreen(viewModel: HomeViewModel = viewModel(), onStudyClick: () -> Unit = {}) {
     val eggDay by viewModel.eggDay.collectAsStateWithLifecycle()
 
     Column(
@@ -33,6 +34,9 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel()) {
             text = "Trang chủ",
             style = MaterialTheme.typography.headlineMedium,
         )
+        Button(onClick = onStudyClick, modifier = Modifier.fillMaxWidth()) {
+            Text("Học flashcard")
+        }
         Card(modifier = Modifier.fillMaxWidth().weight(1f)) {
             Column(
                 modifier = Modifier.fillMaxSize().padding(24.dp),

@@ -19,13 +19,18 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.wordnest.ui.home.HomeScreen
 import com.wordnest.ui.settings.SettingsScreen
+import com.wordnest.ui.study.StudyFlowScreen
+import com.wordnest.viewmodel.StudyViewModel
 
 private enum class TopLevelRoute(val route: String, val label: String, val icon: ImageVector) {
     Home("home", "Trang chủ", Icons.Filled.Home),
     Settings("settings", "Cài đặt", Icons.Filled.Settings),
 }
+
+private const val STUDY_ROUTE = "study"
 
 @Composable
 fun WordNestApp() {
@@ -40,10 +45,12 @@ fun WordNestApp() {
                     NavigationBarItem(
                         selected = currentDestination?.hierarchy?.any { it.route == item.route } == true,
                         onClick = {
+                            // Lưu ý: KHÔNG dùng restoreState=true — với Navigation hiện tại,
+                            // navigate() về destination start (Trang chủ) bị ngẵng lặng lẽ khi
+                            // đang ở màn học (F17-US: bấm tab không phản ứng).
                             navController.navigate(item.route) {
                                 popUpTo(navController.graph.findStartDestination().id) { saveState = true }
                                 launchSingleTop = true
-                                restoreState = true
                             }
                         },
                         icon = { Icon(item.icon, contentDescription = item.label) },
@@ -58,8 +65,17 @@ fun WordNestApp() {
             startDestination = TopLevelRoute.Home.route,
             modifier = Modifier.padding(innerPadding),
         ) {
-            composable(TopLevelRoute.Home.route) { HomeScreen() }
+            composable(TopLevelRoute.Home.route) {
+                HomeScreen(onStudyClick = { navController.navigate(STUDY_ROUTE) })
+            }
             composable(TopLevelRoute.Settings.route) { SettingsScreen() }
+            composable(STUDY_ROUTE) {
+                val studyViewModel: StudyViewModel = viewModel()
+                StudyFlowScreen(
+                    viewModel = studyViewModel,
+                    onExit = { navController.popBackStack() },
+                )
+            }
         }
     }
 }
