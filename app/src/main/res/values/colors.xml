@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Màu nền window/splash, khớp surface của Material3 để không chớp màu sai khi khởi động.
+         Phiên bản tối nằm ở values-night. -->
+    <color name="wordnest_splash_background">#FDFBFF</color>
+</resources>

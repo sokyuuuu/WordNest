@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- API 31+: native splash screen — nền splash khớp màu windowBackground
+         để không chớp trắng ở chế độ tối. Icon splash dùng icon mặc định ứng dụng
+         (đổi windowSplashScreenAnimatedIcon khi team có logo). -->
+    <style name="Theme.WordNest" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/wordnest_splash_background</item>
+        <item name="android:windowSplashScreenBackground">@color/wordnest_splash_background</item>
+    </style>
+</resources>

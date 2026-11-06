@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Theme khai báo cho Manifest: chỉ giữ windowBackground khớp màu surface của
+         Compose (WordNestTheme) để tránh chớp trắng khi bật chế độ tối (F18).
+         Màu nền phân giải theo values / values-night nên một style dùng cho cả hai. -->
+    <style name="Theme.WordNest" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/wordnest_splash_background</item>
+    </style>
+</resources>
