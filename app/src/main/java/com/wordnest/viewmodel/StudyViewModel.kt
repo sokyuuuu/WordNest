@@ -60,6 +60,15 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
     private var knownIds: MutableSet<String> = mutableSetOf()
     val knownCount: Int get() = knownIds.size
 
+    /** Thẻ đang hiện trong phiên học (có thể chỉ là các từ chưa thuộc khi học lại — US10). */
+    val currentCard: StudyWord? get() = currentCardInSession()
+
+    /** Tổng số thẻ trong phiên học hiện tại. */
+    val sessionSize: Int get() = sessionIds.size
+
+    /** Danh sách từ hiện tại chưa đánh dấu "Đã thuộc", dùng cho nút học lại (US10). */
+    private var unmasteredIds: MutableSet<String> = mutableSetOf()
+
     // --- Trắc nghiệm (F12) ---
     private var questions: List<QuizQuestion> = emptyList()
     private val _quizIndex = MutableStateFlow(0)
@@ -97,8 +106,13 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun markCard(known: Boolean) {
-        val word = currentCard() ?: return
-        if (known) knownIds.add(word.id)
+        val word = currentCardInSession() ?: return
+        if (known) {
+            knownIds.add(word.id)
+            unmasteredIds.remove(word.id)
+        } else {
+            unmasteredIds.add(word.id)
+        }
 
         if (_cardIndex.value < sessionIds.lastIndex) {
             _cardIndex.value++
@@ -108,7 +122,7 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    private fun currentCard(): StudyWord? {
+    private fun currentCardInSession(): StudyWord? {
         val id = sessionIds.getOrNull(_cardIndex.value) ?: return null
         return _words.value.firstOrNull { it.id == id }
     }
@@ -144,10 +158,10 @@ class StudyViewModel(application: Application) : AndroidViewModel(application) {
 
     /** Đang có từ chưa thuộc để học lại (US10: chỉ học lại từ chưa thuộc). */
     val hasUnknownWordsToReview: Boolean
-        get() = _words.value.any { it.id !in knownIds }
+        get() = unmasteredIds.isNotEmpty()
 
     fun reviewUnknown() {
-        val unknown = _words.value.filter { it.id !in knownIds }
+        val unknown = _words.value.filter { it.id in unmasteredIds }
         if (unknown.isEmpty()) return
         startFlashcardSession(unknown)
         _mode.value = StudyMode.FLASHCARD

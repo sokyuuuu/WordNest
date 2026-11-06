@@ -30,12 +30,12 @@ import com.wordnest.viewmodel.StudyViewModel
 /** Thẻ flashcard: chạm để lật mặt nghĩa (F08), hai nút đánh dấu (F09). */
 @Composable
 fun FlashcardScreen(viewModel: StudyViewModel, onExit: () -> Unit) {
-    val words by viewModel.words.collectAsStateWithLifecycle()
     val index by viewModel.cardIndex.collectAsStateWithLifecycle()
     val isFlipped by viewModel.isFlipped.collectAsStateWithLifecycle()
     val knownCount = viewModel.knownCount
+    val sessionSize = viewModel.sessionSize
 
-    val word = words.getOrNull(index) ?: return
+    val word = viewModel.currentCard ?: return
 
     Column(
         modifier = Modifier
@@ -50,7 +50,7 @@ fun FlashcardScreen(viewModel: StudyViewModel, onExit: () -> Unit) {
         ) {
             TextButton(onClick = onExit) { Text("Thoát") }
             Text(
-                text = "Thẻ ${index + 1}/${words.size}",
+                text = "Thẻ ${index + 1}/$sessionSize",
                 style = MaterialTheme.typography.titleMedium,
             )
             TextButton(onClick = viewModel::showStatistics) { Text("Thống kê") }
@@ -104,7 +104,7 @@ fun FlashcardScreen(viewModel: StudyViewModel, onExit: () -> Unit) {
         Spacer(Modifier.height(16.dp))
 
         Text(
-            text = "Đã thuộc: $knownCount/${words.size}",
+            text = "Đã thuộc: $knownCount/$sessionSize",
             style = MaterialTheme.typography.bodyMedium,
         )
     }
