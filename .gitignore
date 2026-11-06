@@ -19,5 +19,8 @@
 *.keystore
 keystore.properties
 
+# Gradle daemon tự sinh trên từng máy
+gradle/gradle-daemon-jvm.properties
+
 # Logs
 *.log
