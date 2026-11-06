@@ -51,7 +51,7 @@ fun QuizScreen(viewModel: StudyViewModel) {
 
         Spacer(Modifier.height(24.dp))
 
-        Text("Nghĩa của từ nào là \"${question.word.meaning}\"?", style = MaterialTheme.typography.bodyLarge)
+        Text("Từ nào mang nghĩa \"${question.word.meaning}\"?", style = MaterialTheme.typography.bodyLarge)
 
         Spacer(Modifier.height(16.dp))
 

@@ -28,12 +28,12 @@ fun buildQuizQuestions(
     return words.shuffled(random).map { word ->
         val distractors = words.asSequence()
             .filter { it.id != word.id }
-            .map { it.meaning }
+            .map { it.term }
             .distinct()
             .shuffled(random)
             .take(3)
             .toList()
-        val options = (distractors + word.meaning).shuffled(random)
-        QuizQuestion(word, options, options.indexOf(word.meaning))
+        val options = (distractors + word.term).shuffled(random)
+        QuizQuestion(word, options, options.indexOf(word.term))
     }
 }
