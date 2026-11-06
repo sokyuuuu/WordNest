@@ -45,10 +45,12 @@ fun WordNestApp() {
                     NavigationBarItem(
                         selected = currentDestination?.hierarchy?.any { it.route == item.route } == true,
                         onClick = {
+                            // Lưu ý: KHÔNG dùng restoreState=true — với Navigation hiện tại,
+                            // navigate() về destination start (Trang chủ) bị ngẵng lặng lẽ khi
+                            // đang ở màn học (F17-US: bấm tab không phản ứng).
                             navController.navigate(item.route) {
                                 popUpTo(navController.graph.findStartDestination().id) { saveState = true }
                                 launchSingleTop = true
-                                restoreState = true
                             }
                         },
                         icon = { Icon(item.icon, contentDescription = item.label) },
