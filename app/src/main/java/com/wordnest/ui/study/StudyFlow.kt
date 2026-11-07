@@ -19,9 +19,9 @@ fun StudyFlowScreen(
 
     when (mode) {
         StudyMode.FLASHCARD -> FlashcardScreen(viewModel, onExit)
-        StudyMode.FLASHCARD_RESULT -> FlashcardResultScreen(viewModel)
+        StudyMode.FLASHCARD_RESULT -> FlashcardResultScreen(viewModel, onHome = onExit)
         StudyMode.QUIZ -> QuizScreen(viewModel)
-        StudyMode.QUIZ_RESULT -> QuizResultScreen(viewModel)
+        StudyMode.QUIZ_RESULT -> QuizResultScreen(viewModel, onHome = onExit)
         StudyMode.TYPE_IN -> TypeInScreen(viewModel)
         StudyMode.STATISTICS -> StatisticsScreen(viewModel)
     }

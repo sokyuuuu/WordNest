@@ -46,21 +46,21 @@ class QuizBuilderTest {
     }
 
     @Test
-    fun correctAnswer_isTermPresentOnce() {
+    fun correctAnswer_isMeaningPresentOnce() {
         val questions = buildQuizQuestions(eightWords, seed = 42)
         questions.forEach { question ->
-            assertEquals(1, question.options.count { it == question.word.term })
-            assertEquals(question.word.term, question.options[question.correctIndex])
+            assertEquals(1, question.options.count { it == question.word.meaning })
+            assertEquals(question.word.meaning, question.options[question.correctIndex])
         }
     }
 
     @Test
-    fun distractors_areTermsOfOtherWords() {
+    fun distractors_areMeaningsOfOtherWords() {
         val questions = buildQuizQuestions(eightWords, seed = 42)
-        val allTerms = eightWords.map { it.term }
+        val allMeanings = eightWords.map { it.meaning }
         questions.forEach { question ->
             question.options.forEach { option ->
-                assertTrue(option in allTerms)
+                assertTrue(option in allMeanings)
             }
         }
     }

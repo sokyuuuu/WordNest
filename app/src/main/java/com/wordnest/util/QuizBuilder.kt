@@ -13,10 +13,12 @@ data class QuizQuestion(
 )
 
 /**
- * Tạo bộ câu hỏi trắc nghiệm từ danh sách từ của một Tổ.
+ * Tạo bộ câu hỏi trắc nghiệm từ danh sách từ của một Tổ (F12).
  *
  * - Trả về danh sách rỗng nếu Tổ có ít hơn 4 từ (TC12-05: gợi ý thêm từ).
  * - Các đáp án không trùng nhau (TC12-04).
+ * - Theo Figma: hiện từ (term), người học chọn NGHĨA tiếng Việt đúng —
+ *   đáp án sai là nghĩa của 3 từ khác.
  */
 fun buildQuizQuestions(
     words: List<StudyWord>,
@@ -28,12 +30,12 @@ fun buildQuizQuestions(
     return words.shuffled(random).map { word ->
         val distractors = words.asSequence()
             .filter { it.id != word.id }
-            .map { it.term }
+            .map { it.meaning }
             .distinct()
             .shuffled(random)
             .take(3)
             .toList()
-        val options = (distractors + word.term).shuffled(random)
-        QuizQuestion(word, options, options.indexOf(word.term))
+        val options = (distractors + word.meaning).shuffled(random)
+        QuizQuestion(word, options, options.indexOf(word.meaning))
     }
 }
