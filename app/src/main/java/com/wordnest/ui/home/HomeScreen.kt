@@ -29,7 +29,7 @@ import com.wordnest.ui.components.WnStatCard
 import com.wordnest.ui.components.WnTextLink
 import com.wordnest.viewmodel.HomeViewModel
 import com.wordnest.util.WordStatus
-
+import androidx.compose.material3.Button
 private data class DeckSample(val title: String, val count: Int)
 
 private val deckSamples = listOf(
@@ -42,7 +42,9 @@ private val deckSamples = listOf(
  * "Hôm nay cần ôn", các Tủ mẫu và thống kê "Đàn chim".
  */
 @Composable
-fun HomeScreen(viewModel: HomeViewModel = viewModel(), onStudyClick: () -> Unit = {}) {
+fun HomeScreen(viewModel: HomeViewModel = viewModel(),
+               onStudyClick: () -> Unit = {},
+               onAiClick: () -> Unit = {}) {
     val eggDay by viewModel.eggDay.collectAsStateWithLifecycle()
     val dueCount by viewModel.dueCount.collectAsStateWithLifecycle()
     val flockCounts by viewModel.flockCounts.collectAsStateWithLifecycle()
@@ -104,6 +106,7 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), onStudyClick: () -> Unit 
         }
 
         // Các Tủ của bạn (dữ liệu mẫu chờ F01–F07)
+
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,

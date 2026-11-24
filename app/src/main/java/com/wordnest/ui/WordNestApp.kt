@@ -31,7 +31,15 @@ import com.wordnest.ui.settings.SettingsScreen
 import com.wordnest.ui.study.StatisticsScreenContent
 import com.wordnest.ui.study.StudyFlowScreen
 import com.wordnest.viewmodel.StudyViewModel
-
+import com.wordnest.ui.ai.GeminiChatScreen
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.unit.dp
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material.icons.filled.ChatBubble
 private enum class TopLevelRoute(val route: String, val label: String, val icon: ImageVector) {
     Home("home", "Trang chủ", Icons.Filled.Home),
     Decks("decks", "Các Tủ", Icons.Filled.Folder),
@@ -40,7 +48,7 @@ private enum class TopLevelRoute(val route: String, val label: String, val icon:
 }
 
 private const val STUDY_ROUTE = "study"
-
+private const val AI_ROUTE = "ai_chat"
 @Composable
 fun WordNestApp() {
     val navController = rememberNavController()
@@ -49,28 +57,56 @@ fun WordNestApp() {
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
-        bottomBar = {
-            NavigationBar(
-                containerColor = MaterialTheme.colorScheme.surface,
-            ) {
-                TopLevelRoute.entries.forEach { item ->
-                    NavigationBarItem(
-                        selected = currentDestination?.hierarchy?.any { it.route == item.route } == true,
-                        onClick = {
-                            // Lưu ý: KHÔNG dùng restoreState=true — với Navigation hiện tại,
-                            // navigate() về destination start (Trang chủ) bị ngắt lặng lẽ khi
-                            // đang ở màn học (F17-US: bấm tab không phản ứng).
-                            navController.navigate(item.route) {
-                                popUpTo(navController.graph.findStartDestination().id) { saveState = true }
-                                launchSingleTop = true
-                            }
-                        },
-                        icon = { Icon(item.icon, contentDescription = item.label) },
-                        label = { Text(item.label) },
-                        colors = NavigationBarItemDefaults.colors(
-                            indicatorColor = MaterialTheme.colorScheme.secondaryContainer,
-                        ),
+
+        floatingActionButton = {
+            if (currentDestination?.route == TopLevelRoute.Home.route) {
+                FloatingActionButton(
+                    onClick = {
+                        navController.navigate(AI_ROUTE) {
+                            launchSingleTop = true
+                        }
+                    },
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.ChatBubble,
+                        contentDescription = "Mở WordNest AI"
                     )
+                }
+            }
+        },
+
+
+        bottomBar = {
+            if (currentDestination?.route != AI_ROUTE) {
+                NavigationBar(
+                    containerColor = MaterialTheme.colorScheme.surface
+                ) {
+                    TopLevelRoute.entries.forEach { item ->
+                        NavigationBarItem(
+                            selected = currentDestination?.hierarchy?.any {
+                                it.route == item.route
+                            } == true,
+                            onClick = {
+                                navController.navigate(item.route) {
+                                    popUpTo(navController.graph.findStartDestination().id) {
+                                        saveState = true
+                                    }
+                                    launchSingleTop = true
+                                }
+                            },
+                            icon = {
+                                Icon(item.icon, contentDescription = item.label)
+                            },
+                            label = {
+                                Text(item.label)
+                            },
+                            colors = NavigationBarItemDefaults.colors(
+                                indicatorColor = MaterialTheme.colorScheme.secondaryContainer
+                            )
+                        )
+                    }
                 }
             }
         },
@@ -81,7 +117,14 @@ fun WordNestApp() {
             modifier = Modifier.padding(innerPadding),
         ) {
             composable(TopLevelRoute.Home.route) {
-                HomeScreen(onStudyClick = { navController.navigate(STUDY_ROUTE) })
+                HomeScreen(
+                    onStudyClick = {
+                        navController.navigate(STUDY_ROUTE)
+                    },
+                    onAiClick = {
+                        navController.navigate(AI_ROUTE)
+                    }
+                )
             }
             composable(TopLevelRoute.Decks.route) { ComingSoonScreen() }
             composable(TopLevelRoute.Statistics.route) {
@@ -97,6 +140,13 @@ fun WordNestApp() {
                 StudyFlowScreen(
                     viewModel = studyViewModel,
                     onExit = { navController.popBackStack() },
+                )
+            }
+            composable(AI_ROUTE) {
+                GeminiChatScreen(
+                    onBack = {
+                        navController.popBackStack()
+                    }
                 )
             }
         }
