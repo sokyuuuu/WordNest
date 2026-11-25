@@ -1,6 +1,6 @@
 package com.wordnest.ui.study
 
-import androidx.compose.foundation.background
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,14 +13,21 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.VolumeUp
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.wordnest.ui.components.WnCard
@@ -40,12 +47,41 @@ import com.wordnest.viewmodel.StudyViewModel
  */
 @Composable
 fun FlashcardScreen(viewModel: StudyViewModel, onExit: () -> Unit) {
+    val context = LocalContext.current
+    LaunchedEffect(viewModel, context) {
+        viewModel.speakerErrorEvents.collect { message ->
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        }
+    }
+    DisposableEffect(viewModel) {
+        onDispose { viewModel.shutdownSpeaker() }
+    }
+
+    val words by viewModel.words.collectAsStateWithLifecycle()
     val index by viewModel.cardIndex.collectAsStateWithLifecycle()
     val isFlipped by viewModel.isFlipped.collectAsStateWithLifecycle()
     val knownCount = viewModel.knownCount
     val sessionSize = viewModel.sessionSize
 
-    val word = viewModel.currentCard ?: return
+    val word = viewModel.currentCard
+    if (word == null) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(24.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            WnHeader(title = "Flashcard", onBack = onExit)
+            if (words.isEmpty()) {
+                Text(
+                    text = "Chưa có từ vựng nào để học. Hãy thêm từ vào Tổ trước nhé!",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+        }
+        return
+    }
 
     Column(
         modifier = Modifier
@@ -90,6 +126,20 @@ fun FlashcardScreen(viewModel: StudyViewModel, onExit: () -> Unit) {
             elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
         ) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                if (!isFlipped) {
+                    IconButton(
+                        onClick = viewModel::speakCurrentWord,
+                        modifier = Modifier
+                            .align(Alignment.TopEnd)
+                            .padding(8.dp),
+                    ) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.VolumeUp,
+                            contentDescription = "Phát âm ${word.term}",
+                            tint = MaterialTheme.colorScheme.tertiary,
+                        )
+                    }
+                }
                 Column(
                     modifier = Modifier.padding(24.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,

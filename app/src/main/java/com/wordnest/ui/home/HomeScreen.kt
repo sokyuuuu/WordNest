@@ -1,6 +1,7 @@
 package com.wordnest.ui.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -27,25 +29,29 @@ import com.wordnest.ui.components.WnCard
 import com.wordnest.ui.components.WnPrimaryButton
 import com.wordnest.ui.components.WnStatCard
 import com.wordnest.ui.components.WnTextLink
-import com.wordnest.viewmodel.HomeViewModel
 import com.wordnest.util.WordStatus
-
-private data class DeckSample(val title: String, val count: Int)
-
-private val deckSamples = listOf(
-    DeckSample("Du lịch", 24),
-    DeckSample("IELTS", 40),
-)
+import com.wordnest.viewmodel.HomeViewModel
 
 /**
- * Trang chủ (Figma: "Trang chủ") — lời chào, huy hiệu số ngày ấp, thẻ
- * "Hôm nay cần ôn", các Tủ mẫu và thống kê "Đàn chim".
+ * Trang chủ (Figma: "Trang chủ" — NOI1 / F15):
+ * - Lời chào, huy hiệu số ngày ấp, thẻ "Hôm nay cần ôn" theo dữ liệu Room thật.
+ * - Mục "Các Tủ của bạn" hiển thị tối đa 2 Tổ thật mới nhất (hoặc lời mời tạo Tổ khi chưa có Tổ)
+ *   và nút "Xem tất cả" chuyển sang tab Các Tủ.
+ * - Thống kê "Đàn chim" dùng chung huy hiệu [WordStatus.emoji] với tab Các Tủ.
  */
 @Composable
-fun HomeScreen(viewModel: HomeViewModel = viewModel(), onStudyClick: () -> Unit = {}) {
+fun HomeScreen(
+    viewModel: HomeViewModel = viewModel(),
+    onStudyClick: () -> Unit = {},
+    onSeeAllDecks: () -> Unit = {},
+    onOpenDeck: (String) -> Unit = {},
+    onCreateDeck: () -> Unit = {},
+) {
     val eggDay by viewModel.eggDay.collectAsStateWithLifecycle()
     val dueCount by viewModel.dueCount.collectAsStateWithLifecycle()
     val flockCounts by viewModel.flockCounts.collectAsStateWithLifecycle()
+    val topDecks by viewModel.topDecks.collectAsStateWithLifecycle()
+    val hasDecks by viewModel.hasDecks.collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier
@@ -76,7 +82,7 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), onStudyClick: () -> Unit 
                 .padding(horizontal = 12.dp, vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(text = "🥚")
+            Text(text = WordStatus.EGG.emoji)
             Spacer(Modifier.width(6.dp))
             Text(
                 text = "$eggDay ngày ấp",
@@ -103,7 +109,7 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), onStudyClick: () -> Unit 
             }
         }
 
-        // Các Tủ của bạn (dữ liệu mẫu chờ F01–F07)
+        // Các Tủ của bạn (dữ liệu Room thật — NOI1)
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
@@ -114,28 +120,65 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), onStudyClick: () -> Unit 
                 color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier.weight(1f),
             )
-            WnTextLink(text = "Xem tất cả", onClick = {})
+            WnTextLink(text = "Xem tất cả", onClick = onSeeAllDecks)
         }
-        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            deckSamples.forEach { deck ->
-                WnCard(modifier = Modifier.weight(1f)) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text(
-                            text = deck.title,
-                            style = MaterialTheme.typography.titleSmall,
-                            color = MaterialTheme.colorScheme.onBackground,
-                        )
-                        Text(
-                            text = "${deck.count} từ",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
+
+        if (!hasDecks || topDecks.isEmpty()) {
+            WnCard(modifier = Modifier.fillMaxWidth()) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    Text(
+                        text = "🪺 Chưa có Tổ nào",
+                        style = MaterialTheme.typography.titleSmall,
+                        color = MaterialTheme.colorScheme.onBackground,
+                    )
+                    Text(
+                        text = "Hãy tạo Tổ đầu tiên để thêm từ vựng và bắt đầu hành trình ấp trứng!",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    WnPrimaryButton(
+                        text = "Tạo Tổ mới",
+                        onClick = onCreateDeck,
+                    )
+                }
+            }
+        } else {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                topDecks.forEach { deckWithStats ->
+                    WnCard(modifier = Modifier.weight(1f)) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable { onOpenDeck(deckWithStats.deck.deckId) }
+                                .padding(16.dp),
+                        ) {
+                            Text(
+                                text = deckWithStats.deck.nameDeck,
+                                style = MaterialTheme.typography.titleSmall,
+                                color = MaterialTheme.colorScheme.onBackground,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                            )
+                            Text(
+                                text = "${deckWithStats.wordCount} từ",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
                     }
                 }
             }
         }
 
-        // Đàn chim
+        // Đàn chim (dùng chung WordStatus.emoji với tab Các Tủ)
         Text(
             text = "Đàn chim",
             style = MaterialTheme.typography.titleMedium,
@@ -145,19 +188,19 @@ fun HomeScreen(viewModel: HomeViewModel = viewModel(), onStudyClick: () -> Unit 
             WnStatCard(
                 value = (flockCounts[WordStatus.EGG] ?: 0).toString(),
                 label = WordStatus.EGG.label,
-                icon = "🥚",
+                icon = WordStatus.EGG.emoji,
                 modifier = Modifier.weight(1f),
             )
             WnStatCard(
                 value = (flockCounts[WordStatus.CHICK] ?: 0).toString(),
                 label = WordStatus.CHICK.label,
-                icon = "🐣",
+                icon = WordStatus.CHICK.emoji,
                 modifier = Modifier.weight(1f),
             )
             WnStatCard(
                 value = (flockCounts[WordStatus.BIRD] ?: 0).toString(),
                 label = WordStatus.BIRD.label,
-                icon = "🕊️",
+                icon = WordStatus.BIRD.emoji,
                 modifier = Modifier.weight(1f),
             )
         }

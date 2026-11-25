@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -37,6 +38,7 @@ import com.wordnest.viewmodel.StudyViewModel
 fun TypeInScreen(viewModel: StudyViewModel) {
     val index by viewModel.typeIndex.collectAsStateWithLifecycle()
     val typedCorrect by viewModel.typedCorrect.collectAsStateWithLifecycle()
+    val exampleWithHole by viewModel.currentTypeExample.collectAsStateWithLifecycle()
     var input by remember { mutableStateOf("") }
 
     val word = viewModel.currentTypeWord ?: return
@@ -44,6 +46,7 @@ fun TypeInScreen(viewModel: StudyViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .imePadding()
             .verticalScroll(rememberScrollState())
             .padding(24.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -91,6 +94,27 @@ fun TypeInScreen(viewModel: StudyViewModel) {
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.onBackground,
                 )
+            }
+        }
+
+        // F14: Câu ví dụ có chỗ trống ___ khi từ có ví dụ khớp (ngược lại giữ nguyên như v1.0)
+        exampleWithHole?.let { sentence ->
+            WnCard(modifier = Modifier.fillMaxWidth()) {
+                Column(
+                    modifier = Modifier.padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                ) {
+                    Text(
+                        text = "Câu ví dụ",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    Text(
+                        text = sentence,
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onBackground,
+                    )
+                }
             }
         }
 
