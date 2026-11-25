@@ -1,0 +1,808 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "af5597d544ac866f8639ec8b12be95aa",
+    "entities": [
+      {
+        "tableName": "Admin",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`admin_id` TEXT NOT NULL, `email` TEXT NOT NULL, `password_hash` TEXT NOT NULL, `display_name` TEXT, `is_active` INTEGER NOT NULL, `create_at` TEXT NOT NULL, `last_login_at` TEXT, PRIMARY KEY(`admin_id`))",
+        "fields": [
+          {
+            "fieldPath": "adminId",
+            "columnName": "admin_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "email",
+            "columnName": "email",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "passwordHash",
+            "columnName": "password_hash",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "displayName",
+            "columnName": "display_name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "isActive",
+            "columnName": "is_active",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createAt",
+            "columnName": "create_at",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastLoginAt",
+            "columnName": "last_login_at",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "admin_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_Admin_email",
+            "unique": true,
+            "columnNames": [
+              "email"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_Admin_email` ON `${TABLE_NAME}` (`email`)"
+          }
+        ]
+      },
+      {
+        "tableName": "User",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`user_id` TEXT NOT NULL, `email` TEXT NOT NULL, `password_hash` TEXT, `display_name` TEXT, `is_active` INTEGER NOT NULL, `create_at` TEXT NOT NULL, `last_login_at` TEXT, PRIMARY KEY(`user_id`))",
+        "fields": [
+          {
+            "fieldPath": "userId",
+            "columnName": "user_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "email",
+            "columnName": "email",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "passwordHash",
+            "columnName": "password_hash",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "displayName",
+            "columnName": "display_name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "isActive",
+            "columnName": "is_active",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createAt",
+            "columnName": "create_at",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastLoginAt",
+            "columnName": "last_login_at",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "user_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_User_email",
+            "unique": true,
+            "columnNames": [
+              "email"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_User_email` ON `${TABLE_NAME}` (`email`)"
+          }
+        ]
+      },
+      {
+        "tableName": "Deck",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`deck_id` TEXT NOT NULL, `user_id` TEXT NOT NULL, `name_deck` TEXT NOT NULL, `description` TEXT, `create_at` TEXT NOT NULL, `icon` TEXT NOT NULL, `color` TEXT NOT NULL, PRIMARY KEY(`deck_id`), FOREIGN KEY(`user_id`) REFERENCES `User`(`user_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "deckId",
+            "columnName": "deck_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "userId",
+            "columnName": "user_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nameDeck",
+            "columnName": "name_deck",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "createAt",
+            "columnName": "create_at",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "icon",
+            "columnName": "icon",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "color",
+            "columnName": "color",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "deck_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_Deck_user_id",
+            "unique": false,
+            "columnNames": [
+              "user_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Deck_user_id` ON `${TABLE_NAME}` (`user_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "User",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "user_id"
+            ],
+            "referencedColumns": [
+              "user_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "setting",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`setting_id` TEXT NOT NULL, `user_id` TEXT NOT NULL, `reminder_enable` INTEGER NOT NULL, `reminder_time` TEXT, `dark_mode` INTEGER NOT NULL, `tts_enable` INTEGER NOT NULL, `auto_suggest_enabled` INTEGER NOT NULL, PRIMARY KEY(`setting_id`), FOREIGN KEY(`user_id`) REFERENCES `User`(`user_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "settingId",
+            "columnName": "setting_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "userId",
+            "columnName": "user_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "reminderEnable",
+            "columnName": "reminder_enable",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "reminderTime",
+            "columnName": "reminder_time",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "darkMode",
+            "columnName": "dark_mode",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ttsEnable",
+            "columnName": "tts_enable",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "autoSuggestEnabled",
+            "columnName": "auto_suggest_enabled",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "setting_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_setting_user_id",
+            "unique": true,
+            "columnNames": [
+              "user_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_setting_user_id` ON `${TABLE_NAME}` (`user_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "User",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "user_id"
+            ],
+            "referencedColumns": [
+              "user_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "Word",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`word_id` TEXT NOT NULL, `deck_id` TEXT NOT NULL, `term` TEXT NOT NULL, `meaning` TEXT NOT NULL, `phonetic` TEXT, `example` TEXT, `note` TEXT, `status` TEXT NOT NULL, `correct_streak` INTEGER NOT NULL, `wrong_count` INTEGER NOT NULL, `interval_days` INTEGER NOT NULL, `next_review_at` TEXT, `last_review_at` TEXT, `create_at` TEXT NOT NULL, PRIMARY KEY(`word_id`), FOREIGN KEY(`deck_id`) REFERENCES `Deck`(`deck_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "wordId",
+            "columnName": "word_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "deckId",
+            "columnName": "deck_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "term",
+            "columnName": "term",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "meaning",
+            "columnName": "meaning",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "phonetic",
+            "columnName": "phonetic",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "example",
+            "columnName": "example",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "note",
+            "columnName": "note",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "status",
+            "columnName": "status",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "correctStreak",
+            "columnName": "correct_streak",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "wrongCount",
+            "columnName": "wrong_count",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "intervalDays",
+            "columnName": "interval_days",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nextReviewAt",
+            "columnName": "next_review_at",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lastReviewAt",
+            "columnName": "last_review_at",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "createAt",
+            "columnName": "create_at",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "word_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_Word_deck_id",
+            "unique": false,
+            "columnNames": [
+              "deck_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Word_deck_id` ON `${TABLE_NAME}` (`deck_id`)"
+          },
+          {
+            "name": "index_Word_term",
+            "unique": false,
+            "columnNames": [
+              "term"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Word_term` ON `${TABLE_NAME}` (`term`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "Deck",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "deck_id"
+            ],
+            "referencedColumns": [
+              "deck_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "study_session",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`session_id` TEXT NOT NULL, `deck_id` TEXT NOT NULL, `started_at` TEXT NOT NULL, `ended_at` TEXT, `known_count` INTEGER NOT NULL, `unknown_count` INTEGER NOT NULL, PRIMARY KEY(`session_id`), FOREIGN KEY(`deck_id`) REFERENCES `Deck`(`deck_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "sessionId",
+            "columnName": "session_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "deckId",
+            "columnName": "deck_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "startedAt",
+            "columnName": "started_at",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "endedAt",
+            "columnName": "ended_at",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "knownCount",
+            "columnName": "known_count",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "unknownCount",
+            "columnName": "unknown_count",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "session_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_study_session_deck_id",
+            "unique": false,
+            "columnNames": [
+              "deck_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_study_session_deck_id` ON `${TABLE_NAME}` (`deck_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "Deck",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "deck_id"
+            ],
+            "referencedColumns": [
+              "deck_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "StudyItem",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`item_id` TEXT NOT NULL, `session_id` TEXT NOT NULL, `word_id` TEXT NOT NULL, `result` TEXT NOT NULL, `order_no` INTEGER NOT NULL, PRIMARY KEY(`item_id`), FOREIGN KEY(`session_id`) REFERENCES `study_session`(`session_id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`word_id`) REFERENCES `Word`(`word_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "itemId",
+            "columnName": "item_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sessionId",
+            "columnName": "session_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "wordId",
+            "columnName": "word_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "result",
+            "columnName": "result",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "orderNo",
+            "columnName": "order_no",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "item_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_StudyItem_session_id",
+            "unique": false,
+            "columnNames": [
+              "session_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_StudyItem_session_id` ON `${TABLE_NAME}` (`session_id`)"
+          },
+          {
+            "name": "index_StudyItem_word_id",
+            "unique": false,
+            "columnNames": [
+              "word_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_StudyItem_word_id` ON `${TABLE_NAME}` (`word_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "study_session",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "session_id"
+            ],
+            "referencedColumns": [
+              "session_id"
+            ]
+          },
+          {
+            "table": "Word",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "word_id"
+            ],
+            "referencedColumns": [
+              "word_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "Quiz",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`quiz_id` TEXT NOT NULL, `deck_id` TEXT NOT NULL, `quiz_type` TEXT NOT NULL, `total_questions` INTEGER NOT NULL, `correct_count` INTEGER NOT NULL, `score` REAL NOT NULL, `taken_at` TEXT NOT NULL, PRIMARY KEY(`quiz_id`), FOREIGN KEY(`deck_id`) REFERENCES `Deck`(`deck_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "quizId",
+            "columnName": "quiz_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "deckId",
+            "columnName": "deck_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "quizType",
+            "columnName": "quiz_type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "totalQuestions",
+            "columnName": "total_questions",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "correctCount",
+            "columnName": "correct_count",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "score",
+            "columnName": "score",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "takenAt",
+            "columnName": "taken_at",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "quiz_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_Quiz_deck_id",
+            "unique": false,
+            "columnNames": [
+              "deck_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Quiz_deck_id` ON `${TABLE_NAME}` (`deck_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "Deck",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "deck_id"
+            ],
+            "referencedColumns": [
+              "deck_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "QuizItem",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`quiz_item_id` TEXT NOT NULL, `quiz_id` TEXT NOT NULL, `word_id` TEXT NOT NULL, `question_type` TEXT NOT NULL, `user_answer` TEXT, `is_correct` INTEGER NOT NULL, PRIMARY KEY(`quiz_item_id`), FOREIGN KEY(`quiz_id`) REFERENCES `Quiz`(`quiz_id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`word_id`) REFERENCES `Word`(`word_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "quizItemId",
+            "columnName": "quiz_item_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "quizId",
+            "columnName": "quiz_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "wordId",
+            "columnName": "word_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "questionType",
+            "columnName": "question_type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "userAnswer",
+            "columnName": "user_answer",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "isCorrect",
+            "columnName": "is_correct",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "quiz_item_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_QuizItem_quiz_id",
+            "unique": false,
+            "columnNames": [
+              "quiz_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_QuizItem_quiz_id` ON `${TABLE_NAME}` (`quiz_id`)"
+          },
+          {
+            "name": "index_QuizItem_word_id",
+            "unique": false,
+            "columnNames": [
+              "word_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_QuizItem_word_id` ON `${TABLE_NAME}` (`word_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "Quiz",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "quiz_id"
+            ],
+            "referencedColumns": [
+              "quiz_id"
+            ]
+          },
+          {
+            "table": "Word",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "word_id"
+            ],
+            "referencedColumns": [
+              "word_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "QuizOption",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`option_id` TEXT NOT NULL, `quiz_item_id` TEXT NOT NULL, `option_text` TEXT NOT NULL, `is_correct` INTEGER NOT NULL, `order_no` INTEGER NOT NULL, PRIMARY KEY(`option_id`), FOREIGN KEY(`quiz_item_id`) REFERENCES `QuizItem`(`quiz_item_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "optionId",
+            "columnName": "option_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "quizItemId",
+            "columnName": "quiz_item_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "optionText",
+            "columnName": "option_text",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isCorrect",
+            "columnName": "is_correct",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "orderNo",
+            "columnName": "order_no",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "option_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_QuizOption_quiz_item_id",
+            "unique": false,
+            "columnNames": [
+              "quiz_item_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_QuizOption_quiz_item_id` ON `${TABLE_NAME}` (`quiz_item_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "QuizItem",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "quiz_item_id"
+            ],
+            "referencedColumns": [
+              "quiz_item_id"
+            ]
+          }
+        ]
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'af5597d544ac866f8639ec8b12be95aa')"
+    ]
+  }
+}

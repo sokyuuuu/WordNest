@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -13,6 +14,8 @@ android {
         targetSdk = 36
         versionCode = 1
         versionName = "1.0.0"
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -33,6 +36,22 @@ android {
     buildFeatures {
         compose = true
     }
+
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
+
+    sourceSets {
+        // debug assets phục vụ MigrationTestHelper trên Robolectric (không đóng gói vào bản release)
+        getByName("debug").assets.directories.add("$projectDir/schemas")
+        getByName("androidTest").assets.directories.add("$projectDir/schemas")
+    }
+}
+
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
 }
 
 dependencies {
@@ -47,11 +66,24 @@ dependencies {
     implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.work.runtime.ktx)
 
+    // Room & Coroutines (RD1)
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.kotlinx.coroutines.android)
+
     debugImplementation(libs.androidx.compose.ui.tooling)
 
     testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.androidx.test.core)
+    testImplementation(libs.androidx.test.core.ktx)
+    testImplementation(libs.androidx.room.testing)
+    testImplementation(libs.turbine)
 }
