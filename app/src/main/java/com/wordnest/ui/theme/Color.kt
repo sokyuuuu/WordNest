@@ -1,6 +1,10 @@
 package com.wordnest.ui.theme
 
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
+import com.wordnest.data.local.entity.DeckStyle
 
 /**
  * Bảng màu WordNest khớp design Figma + style guide (design/style_guide.md):
@@ -27,4 +31,34 @@ object WnColor {
     val BrownMutedDark = Color(0xFFB8A892)
     val BeigeDark = Color(0xFF3A342B)
     val GreenDark = Color(0xFF6FCF97)
+
+    // Deck pastel tokens (D12 — sáng & tối)
+    val DeckMint = Color(0xFFA8E0C9)
+    val DeckYellow = Color(0xFFF7D574)
+    val DeckGrey = Color(0xFFD6DCE2)
+    val DeckPink = Color(0xFFF2B8B5)
+    val DeckTeal = Color(0xFF8EB8E0)
+
+    val DeckMintDark = Color(0xFF27493B)
+    val DeckYellowDark = Color(0xFF524118)
+    val DeckGreyDark = Color(0xFF343A40)
+    val DeckPinkDark = Color(0xFF4F2D2C)
+    val DeckTealDark = Color(0xFF263F57)
+}
+
+/**
+ * Ánh xạ mã màu Tổ (`mint`, `yellow`, `grey`, `pink`, `teal`) sang token pastel trong [WnColor],
+ * tự thích ứng theo `MaterialTheme.colorScheme` (tôn trọng cả cài đặt chế độ tối trong DataStore).
+ */
+@Composable
+fun wnDeckColorForKey(key: String?): Color {
+    val isDark = MaterialTheme.colorScheme.background.luminance() < 0.5f
+    return when (key?.lowercase()) {
+        DeckStyle.COLOR_MINT -> if (isDark) WnColor.DeckMintDark else WnColor.DeckMint
+        DeckStyle.COLOR_YELLOW -> if (isDark) WnColor.DeckYellowDark else WnColor.DeckYellow
+        DeckStyle.COLOR_GREY -> if (isDark) WnColor.DeckGreyDark else WnColor.DeckGrey
+        DeckStyle.COLOR_PINK -> if (isDark) WnColor.DeckPinkDark else WnColor.DeckPink
+        DeckStyle.COLOR_TEAL -> if (isDark) WnColor.DeckTealDark else WnColor.DeckTeal
+        else -> if (isDark) WnColor.DeckMintDark else WnColor.DeckMint
+    }
 }

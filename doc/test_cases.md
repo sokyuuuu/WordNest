@@ -14,31 +14,33 @@ Tài liệu này được viết từ tiêu chí chấp nhận trong [`user_stor
 |---|---|---|---|
 | TC01-01 | Tạo Tổ hợp lệ | 1. Bấm nút tạo Tổ<br>2. Nhập tên "Tiếng Anh cơ bản", mô tả "Từ vựng đời sống"<br>3. Bấm Lưu | Tổ mới hiện ngay trong danh sách với đúng tên |
 | TC01-02 | Tạo Tổ không nhập mô tả | 1. Nhập tên, bỏ trống mô tả<br>2. Bấm Lưu | Tổ được tạo thành công |
-| TC01-03 | Bỏ trống tên | 1. Bỏ trống tên, nhập mô tả<br>2. Bấm Lưu | Không lưu, hiển thị thông báo lỗi ở ô tên |
-| TC01-04 | Tên chỉ có khoảng trắng | 1. Nhập tên toàn khoảng trắng<br>2. Bấm Lưu | Không lưu, hiển thị thông báo lỗi |
+| TC01-03 | Tạo Tổ tên trống | 1. Bỏ trống ô tên, nhập mô tả<br>2. Bấm Lưu | Không tạo Tổ, hiển thị thông báo lỗi ở ô tên |
+| TC01-04 | Tên chỉ có khoảng trắng | 1. Nhập tên toàn khoảng trắng<br>2. Bấm Lưu | Không tạo Tổ, hiển thị thông báo lỗi |
+| TC01-05 | Tên Tổ vượt giới hạn 100 ký tự | 1. Nhập chuỗi > 100 ký tự vào ô tên Tổ<br>2. Kiểm tra/bấm Lưu | Không cho vượt giới hạn hoặc báo lỗi độ dài (≤ 100 ký tự) |
 
 ## US02 – Sửa và xóa Tổ (F02)
 
 | Mã | Kịch bản | Các bước | Kết quả mong đợi |
 |---|---|---|---|
-| TC02-01 | Sửa tên Tổ | 1. Chọn Tổ, bấm Sửa<br>2. Đổi tên, bấm Lưu | Tên mới hiển thị ngay trong danh sách |
+| TC02-01 | Sửa tên Tổ | 1. Chọn Tổ, bấm Sửa<br>2. Đổi tên, bấm Lưu | Tên mới hiển thị ngay trong danh sách và chi tiết Tổ |
 | TC02-02 | Hủy xóa Tổ | 1. Chọn Tổ, bấm Xóa<br>2. Ở hộp thoại xác nhận, bấm Hủy | Tổ vẫn còn, không thay đổi |
 | TC02-03 | Xác nhận xóa Tổ | 1. Chọn Tổ, bấm Xóa<br>2. Bấm Xác nhận | Tổ biến mất khỏi danh sách |
-| TC02-04 | Xóa Tổ thì xóa luôn các từ bên trong | 1. Ghi nhớ số từ trong Tổ A (ví dụ 5 từ)<br>2. Xóa Tổ A<br>3. Tìm một trong các từ đó bằng F07 | Không tìm thấy từ nào của Tổ A |
+| TC02-04 | Xóa Tổ thì xóa luôn các từ bên trong | 1. Ghi nhớ số từ trong Tổ A (ví dụ 5 từ)<br>2. Xóa Tổ A<br>3. Tìm một trong các từ đó bằng F07 và kiểm tra Thống kê | Không tìm thấy từ nào của Tổ A; tổng từ ở Trang chủ/Thống kê giảm tương ứng |
 
 ## US03 – Xem danh sách Tổ và tiến độ (F03)
 
 | Mã | Kịch bản | Các bước | Kết quả mong đợi |
 |---|---|---|---|
 | TC03-01 | Hiển thị số từ | 1. Tạo Tổ có 10 từ<br>2. Mở danh sách Tổ | Tổ hiển thị "10 từ" |
-| TC03-02 | Tỉ lệ đã thuộc đúng | 1. Tổ có 10 từ, 4 từ đã thuộc<br>2. Mở danh sách Tổ | Tổ hiển thị 40% đã thuộc |
-| TC03-03 | Tổ rỗng | 1. Tạo Tổ mới, không thêm từ<br>2. Mở danh sách Tổ | Hiển thị 0 từ, 0%, không báo lỗi chia cho 0 |
+| TC03-02 | Tỉ lệ đã thuộc đúng | 1. Tổ có 10 từ, 4 từ ở mức Chim non / Chim bay<br>2. Mở danh sách Tổ | Tổ hiển thị 40% đã thuộc |
+| TC03-03 | Tạo Tổ trống (0 từ) | 1. Tạo Tổ mới, chưa thêm từ nào<br>2. Mở danh sách Tổ | Hiển thị 0 từ, tiến độ 0%, không báo lỗi chia cho 0 |
+| TC03-04 | Trạng thái trống khi chưa có Tổ nào | 1. Xóa hết các Tổ hiện có<br>2. Mở tab Các Tủ | Hiện trạng thái trống kèm nút "Tạo Tổ" (không còn màn "Sắp ra mắt") |
 
 ## US04 – Thêm từ (F04)
 
 | Mã | Kịch bản | Các bước | Kết quả mong đợi |
 |---|---|---|---|
-| TC04-01 | Thêm từ đầy đủ | 1. Mở Tổ, bấm thêm từ<br>2. Nhập từ "hello", nghĩa "xin chào", phiên âm "/həˈləʊ/", ví dụ "Hello, world"<br>3. Bấm Lưu | Từ được lưu và hiển thị trong danh sách Tổ với đủ 4 thông tin |
+| TC04-01 | Thêm từ đầy đủ | 1. Mở Tổ, bấm thêm từ<br>2. Nhập từ "hello", nghĩa "xin chào", phiên âm "/həˈləʊ/", ví dụ "Hello, world"<br>3. Bấm Lưu | Từ được lưu và hiển thị đầu danh sách Tổ với đủ 4 thông tin |
 | TC04-02 | Thêm từ chỉ có từ và nghĩa | 1. Nhập từ và nghĩa, bỏ trống phiên âm và ví dụ<br>2. Bấm Lưu | Từ được lưu thành công |
 | TC04-03 | Thiếu từ | 1. Bỏ trống ô từ, nhập nghĩa<br>2. Bấm Lưu | Không lưu, báo lỗi ở ô từ |
 | TC04-04 | Thiếu nghĩa | 1. Nhập từ, bỏ trống nghĩa<br>2. Bấm Lưu | Không lưu, báo lỗi ở ô nghĩa |
@@ -48,24 +50,30 @@ Tài liệu này được viết từ tiêu chí chấp nhận trong [`user_stor
 | Mã | Kịch bản | Các bước | Kết quả mong đợi |
 |---|---|---|---|
 | TC05-01 | Sửa nghĩa của từ | 1. Chọn một từ, bấm Sửa<br>2. Đổi nghĩa, bấm Lưu | Nghĩa mới hiển thị ngay |
-| TC05-02 | Xóa từ | 1. Chọn một từ, bấm Xóa<br>2. Xác nhận nếu có hộp thoại | Từ biến mất khỏi danh sách Tổ |
-| TC05-03 | Sửa từ thành ô trống | 1. Xóa hết nội dung ô nghĩa<br>2. Bấm Lưu | Không lưu, báo lỗi |
+| TC05-02 | Xác nhận xóa từ | 1. Chọn một từ, bấm Xóa<br>2. Bấm Xóa ở hộp thoại xác nhận | Từ biến mất khỏi danh sách Tổ, Tìm kiếm, Trang chủ và Thống kê |
+| TC05-03 | Sửa từ thành ô trống | 1. Xóa hết nội dung ô nghĩa<br>2. Bấm Lưu | Không lưu, báo lỗi ở ô nghĩa |
+| TC05-04 | Sửa nghĩa giữ nguyên trạng thái chim | 1. Chọn từ đang ở trạng thái 🕊️ Chim bay (hoặc 🐣 Chim non)<br>2. Sửa nghĩa hoặc câu ví dụ rồi bấm Lưu | Nội dung mới cập nhật ngay, huy hiệu 🕊️/🐣 và lịch sử ôn giữ nguyên |
+| TC05-05 | Hủy xóa từ | 1. Bấm Xóa trên một từ<br>2. Bấm Hủy ở hộp thoại xác nhận | Từ vẫn còn nguyên trong danh sách |
 
 ## US06 – Xem danh sách từ trong Tổ (F06)
 
 | Mã | Kịch bản | Các bước | Kết quả mong đợi |
 |---|---|---|---|
-| TC06-01 | Hiển thị trạng thái từng từ | 1. Mở Tổ có từ ở các trạng thái khác nhau | Mỗi từ hiện kèm một trong ba trạng thái: Trứng, Chim non, Chim bay |
-| TC06-02 | Từ mới có trạng thái Trứng | 1. Thêm một từ mới<br>2. Mở danh sách từ của Tổ | Từ mới hiện trạng thái Trứng |
+| TC06-01 | Hiển thị trạng thái từng từ | 1. Mở Tổ có từ ở các trạng thái khác nhau | Mỗi từ hiện kèm huy hiệu 🥚 Trứng, 🐣 Chim non hoặc 🕊️ Chim bay |
+| TC06-02 | Từ mới có trạng thái Trứng | 1. Thêm một từ mới<br>2. Mở danh sách từ của Tổ | Từ mới hiện trạng thái 🥚 Trứng |
+| TC06-03 | Tổ chưa có từ nào | 1. Mở chi tiết một Tổ mới tạo (0 từ) | Hiển thị trạng thái trống kèm nút "Thêm từ" |
+| TC06-04 | Tự cập nhật huy hiệu sau buổi học | 1. Học xong 1 buổi làm thay đổi trạng thái từ<br>2. Quay lại màn chi tiết Tổ | Huy hiệu của từ phản ánh trạng thái mới ngay, không cần mở lại app |
 
 ## US07 – Tìm kiếm từ (F07)
 
 | Mã | Kịch bản | Các bước | Kết quả mong đợi |
 |---|---|---|---|
 | TC07-01 | Tìm bằng một phần của từ | 1. Có từ "hello" trong một Tổ<br>2. Gõ "hel" vào ô tìm kiếm | Từ "hello" hiện trong kết quả, kèm tên Tổ chứa nó |
-| TC07-02 | Tìm trong nhiều Tổ | 1. Có từ "hello" ở Tổ A và "help" ở Tổ B<br>2. Gõ "hel" | Cả hai từ hiện trong kết quả |
-| TC07-03 | Không phân biệt hoa thường | 1. Gõ "HELLO" | Vẫn ra kết quả "hello" |
-| TC07-04 | Không có kết quả | 1. Gõ chuỗi không tồn tại | Hiển thị thông báo không có kết quả |
+| TC07-02 | Tìm trong nhiều Tổ | 1. Có từ "airport" ở Tổ Du lịch và "chair" ở Tổ khác<br>2. Gõ "air" | Cả hai từ hiện trong kết quả, mỗi dòng ghi rõ tên Tổ |
+| TC07-03 | Không phân biệt hoa thường | 1. Gõ "HELLO" hoặc "AIRP" | Vẫn ra kết quả "hello" / "airport" |
+| TC07-04 | Không có kết quả | 1. Gõ chuỗi không tồn tại | Hiển thị thông báo "Không tìm thấy từ nào" |
+| TC07-05 | Tìm ký tự đặc biệt (`%`, `_`, `\`) | 1. Gõ `%` (hoặc `_`, `\`) vào ô tìm kiếm | Không crash, không trả về toàn bộ từ do ký tự đại diện SQL `LIKE`; chỉ khớp từ thực sự chứa ký tự đó |
+| TC07-06 | Chạm kết quả mở Tổ chứa từ | 1. Tìm ra một từ trong danh sách kết quả<br>2. Chạm vào dòng kết quả đó | Điều hướng tới đúng màn chi tiết Tổ chứa từ đó |
 
 ## US08 – Lật thẻ (F08)
 
@@ -129,6 +137,8 @@ Việc lên hạng dựa trên **thời gian học đều đặn** (tương tự
 | TC14-01 | Gõ đúng | 1. Hiển thị nghĩa "xin chào"<br>2. Gõ "hello", gửi | Chấm đúng |
 | TC14-02 | Gõ sai | 1. Gõ "helo", gửi | Chấm sai, hiển thị đáp án đúng "hello" |
 | TC14-03 | Bỏ qua hoa thường và khoảng trắng | 1. Gõ " HELLO " | Chấm đúng |
+| TC14-04 | Hiển thị câu ví dụ có chỗ trống `___` | 1. Từ đang hỏi ("airport") có câu ví dụ chứa nguyên từ đó ("I go to the airport by bus.")<br>2. Mở câu hỏi ở màn Điền từ | Hiển thị thẻ "Câu ví dụ" với từ được thay bằng `___`: `"I go to the ___ by bus."` (không phân biệt hoa/thường, thay mọi lần xuất hiện nguyên từ) |
+| TC14-05 | Từ chưa có ví dụ hoặc ví dụ không khớp nguyên từ | 1. Từ có `example = null` hoặc câu ví dụ chỉ chứa từ ghép khác ("A notebook" với từ "book")<br>2. Mở câu hỏi ở màn Điền từ | Không hiển thị chỗ trống sai; màn hình giữ giao diện hỏi nghĩa như v1.0 |
 
 ## US15 – Trang chủ (F15)
 
@@ -137,6 +147,7 @@ Việc lên hạng dựa trên **thời gian học đều đặn** (tương tự
 | TC15-01 | Hiển thị ngày ấp trứng | 1. Mở app | Trang chủ hiển thị ngày ấp trứng hiện tại |
 | TC15-02 | Số từ cần ôn đúng | 1. Có 5 từ đến hạn ôn hôm nay, 2 từ chưa đến hạn<br>2. Mở app | Hiển thị 5 từ cần ôn |
 | TC15-03 | Không có từ cần ôn | 1. Không có từ đến hạn | Hiển thị 0 và thông báo phù hợp |
+| TC15-04 | Các Tủ của bạn & nút "Xem tất cả" | 1. Tạo ≥ 3 Tổ từ vựng, mở Trang chủ<br>2. Kiểm tra mục "Các Tủ của bạn" và bấm "Xem tất cả"<br>3. Xóa hết Tổ, quay lại Trang chủ | Hiện tối đa 2 Tổ thật mới nhất (kèm tên & số từ); bấm "Xem tất cả" chuyển sang tab Các Tủ; khi chưa có Tổ thì hiện lời mời tạo Tổ |
 
 ## US16 – Đàn chim của bạn (F16)
 
@@ -166,12 +177,15 @@ Việc lên hạng dựa trên **thời gian học đều đặn** (tương tự
 
 ## US19 – Phát âm từ (F19)
 
-Mức ưu tiên Thấp. Làm trong v1.0.0 nếu kịp.
+Triển khai hoàn chỉnh ở bản v1.1 (Gói B) bằng `TextToSpeech` (`Locale.ENGLISH`).
 
 | Mã | Kịch bản | Các bước | Kết quả mong đợi |
 |---|---|---|---|
-| TC19-01 | Có nút loa | 1. Mở thẻ flashcard | Thẻ có nút loa |
-| TC19-02 | Đọc từ | 1. Chạm nút loa | Đọc to từ đó bằng tiếng Anh |
+| TC19-01 | Có nút loa ở Flashcard | 1. Mở thẻ flashcard (mặt trước) | Góc thẻ có nút loa (`contentDescription = "Phát âm <từ>"`), chạm không làm lật nhầm thẻ |
+| TC19-02 | Đọc từ ở Flashcard | 1. Chạm nút loa trên thẻ flashcard | Đọc to từ tiếng Anh đang mở |
+| TC19-03 | Đọc từ ở màn Trắc nghiệm | 1. Vào bài Trắc nghiệm<br>2. Chạm nút loa cạnh câu hỏi | Đọc to từ tiếng Anh đang hỏi (không còn nhãn "đang phát triển") |
+| TC19-04 | Thiếu dữ liệu giọng đọc tiếng Anh | 1. Trên thiết bị/máy ảo chưa cài gói giọng tiếng Anh, chạm nút loa | Hiện Toast `"Chưa cài dữ liệu phát âm"`, ứng dụng không bị crash |
+| TC19-05 | Bấm loa liên tiếp & giải phóng khi rời màn | 1. Bấm loa từ A rồi chuyển sang từ B bấm loa ngay<br>2. Thoát khỏi màn học | Từ A dừng ngay để đọc từ B (`QUEUE_FLUSH`); khi thoát màn học bộ đọc được `shutdown`, không đọc tiếp trong nền |
 
 ## US20 – Lặp lại ngắt quãng (F20)
 
@@ -198,25 +212,26 @@ Chuyển sang v1.1. Không thuộc phạm vi v1.0.0, vì đi ngược với READ
 
 | Nhóm | Số US | Số test case |
 |---|---|---|
-| Quản lý Tổ và từ (US01–US07) | 7 | 24 |
-| Học tập và kiểm tra (US08–US14) | 7 | 26 |
-| Theo dõi và tiện ích (US15–US18) | 4 | 14 |
-| Nâng cao (US19–US21) | 3 | 7 |
-| **Tổng** | **21** | **71** |
+| Quản lý Tổ và từ (US01–US07) | 7 | 32 |
+| Học tập và kiểm tra (US08–US14) | 7 | 28 |
+| Theo dõi và tiện ích (US15–US18) | 4 | 15 |
+| Nâng cao (US19–US21) | 3 | 10 |
+| **Tổng** | **21** | **85** |
 
 ---
 
 ## Đã chốt
 
-- **Mô tả Tổ là tùy chọn** (TC01-02).
+- **Mô tả Tổ là tùy chọn** (TC01-02); giới hạn tên Tổ ≤ 100 ký tự, mô tả ≤ 500 ký tự (TC01-05).
+- **Xóa Tổ / xóa từ** đều có hộp thoại xác nhận và sử dụng cơ chế xóa mềm (`deleted = 1`) phục vụ đồng bộ đám mây; sửa từ giữ nguyên trạng thái chim và lịch sử ôn (TC02-02..04, TC05-04..05).
+- **Tìm kiếm toàn cục** thoát ký tự đặc biệt SQL `LIKE` (`%`, `_`, `\`) an toàn và hiển thị tên Tổ chứa từ (TC07-05..06).
 - **Nút "học lại" ẩn** khi không có từ chưa thuộc (TC10-03).
-- **Lên hạng dựa trên thời gian học đều đặn**, tương tự chuỗi ngày của Duolingo. "Chưa thuộc" không làm giảm hạng. Nếu không học trong một thời gian, hạng tự giảm (US11, TC11-02 đến TC11-05).
+- **Lên hạng dựa trên thời gian học đều đặn**, tương tự chuỗi ngày của Duolingo (hiện áp dụng ngưỡng 3 ngày → Chim non, 7 ngày → Chim bay; bỏ bẵng ≥ 7 ngày giảm 1 bậc). "Chưa thuộc" không làm giảm hạng (US11, TC11-02 đến TC11-05).
 - **Tổ có ít từ:** gợi ý thêm từ (TC12-05).
-- **Phạm vi v1.0.0:**
-  - F01–F18: bắt buộc.
-  - F19 (phát âm): làm nếu kịp, dùng `TextToSpeech` có sẵn.
-  - F20 (lặp lại ngắt quãng): làm bản đơn giản.
-  - F21 (đăng nhập, đồng bộ Firebase): chuyển sang v1.1.
+- **Điền từ (F14):** tự động thay nguyên từ gốc trong câu ví dụ bằng `___` (`ExampleHole`), giữ nguyên giao diện v1.0 khi từ chưa có ví dụ khớp (TC14-04..05).
+- **Phạm vi v1.0.0 → v1.1:**
+  - v1.0.0: luồng học F08–F18 + dữ liệu mẫu khởi tạo.
+  - v1.1: lưu trữ thật bằng Room v3 + quản lý Tổ/từ F01–F07 + nối Trang chủ/Điền từ có ví dụ (NOI1/F14) + phát âm TTS F19 (Gói B); đăng nhập & đồng bộ Firebase F21 (Gói A); thống kê nâng cao & AI sinh ví dụ (Gói C).
 
 ## Câu hỏi còn lại
 
