@@ -79,7 +79,7 @@ fun WordNestApp() {
 
 
         bottomBar = {
-            if (currentDestination?.route != AI_ROUTE) {
+            if (currentDestination?.route == TopLevelRoute.Home.route) { //vừa sửa
                 NavigationBar(
                     containerColor = MaterialTheme.colorScheme.surface
                 ) {
