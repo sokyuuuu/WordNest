@@ -8,12 +8,12 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.net.HttpURLConnection
 import java.net.URL
-
+import kotlinx.coroutines.CancellationException
 class GeminiRepository {
 
     private val apiKey = BuildConfig.GEMINI_API_KEY
 
-    private val model = "gemini-3.1-flash"
+    private val model = "gemini-3.5-flash"
     suspend fun sendMessage(message: String): String =
         withContext(Dispatchers.IO) {
 
@@ -22,7 +22,7 @@ class GeminiRepository {
             }
 
             val endpoint =
-                "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent"
+                "https://generativelanguage.googleapis.com/v1beta/models/$model:generateContent"
 
             var connection: HttpURLConnection? = null
 
@@ -157,6 +157,8 @@ class GeminiRepository {
                     }
                 }
 
+            } catch (e: CancellationException) {
+            throw e
             } catch (e: Exception) {
                 "Không thể kết nối Gemini. Vui lòng kiểm tra Internet và thử lại."
             } finally {
@@ -177,4 +179,73 @@ class GeminiRepository {
                     "Thay từ cần điền bằng ___ và đặt đáp án ở cuối."
         )
     }
+
+    suspend fun generateClozeExample(
+        word: String,
+        meaning: String
+    ): ClozeExample? {
+
+        if (apiKey.isBlank() || word.isBlank()) {
+            return null
+        }
+
+        val prompt = """
+            Tạo một bài tập điền từ tiếng Anh.
+
+            Từ cần điền: $word
+            Nghĩa tiếng Việt: $meaning
+
+            Yêu cầu:
+            - Chỉ tạo một câu tiếng Anh đơn giản.
+            - Thay từ cần điền bằng đúng một chỗ trống ___.
+            - Khi điền từ gốc vào, câu phải đúng ngữ pháp.
+            - Không tiết lộ đáp án trong câu tiếng Anh.
+            - Cung cấp bản dịch tiếng Việt đầy đủ.
+            - Chỉ trả về JSON hợp lệ.
+            - Không chào hỏi, không giải thích.
+            - Không sử dụng Markdown.
+
+            Định dạng JSON:
+            {
+                "example": "Câu tiếng Anh có ___",
+                "translation": "Bản dịch tiếng Việt"
+            }
+        """.trimIndent()
+
+        repeat(2) { attempt ->
+
+            val request = if (attempt == 0) {
+                prompt
+            } else {
+                "$prompt\nHãy kiểm tra kỹ định dạng JSON."
+            }
+
+            val response = sendMessage(request)
+
+            val result = ClozeExampleParser.parse(
+                raw = response,
+                word = word
+            )
+
+            if (result != null) {
+                return result
+            }
+
+            // Không retry khi gặp lỗi kết nối hoặc quota
+            if (
+                response.startsWith("Không thể kết nối") ||
+                response.startsWith("Đã vượt giới hạn") ||
+                response.startsWith("API Key không hợp lệ") ||
+                response.startsWith("Không tìm thấy mô hình") ||
+                response.startsWith("Máy chủ Gemini") ||
+                response.startsWith("Gemini API gặp lỗi") ||
+                response.startsWith("Yêu cầu không hợp lệ")
+            ) {
+                return null
+            }
+        }
+
+        return null
+    }
+
 }
